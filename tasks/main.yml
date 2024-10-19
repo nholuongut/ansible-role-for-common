@@ -1,0 +1,49 @@
+---
+
+- name: Setup the user
+  set_fact: 
+    target_user: '{{ ansible_user }}'
+  when: target_user is undefined
+  tags: ['all']
+
+- name: Set NVM_DIR
+  set_fact:
+    NVM_DIR: "/home/{{ target_user }}/.nvm"
+  no_log: true
+
+- name: Get ID of local user
+  shell: id -un
+  connection: local
+  register: username_result
+  run_once: true
+  no_log: true
+
+- name: Gather Facts now that the server can be reached
+  setup:
+  when: ansible_host != 'localhost'
+
+#
+# hostnames
+#
+
+- name: Get the local hostname (short)
+  shell: hostname -s
+  connection: local
+  register: host_short
+  when: ansible_host == 'localhost'
+
+- name: Get the local hostname (long)
+  shell: hostname
+  connection: local
+  register: host_long
+  when: ansible_host == 'localhost'
+
+- name: Set basic facts, assuming MacOS
+  set_fact:
+    server_fqdn:            "{{ host_long.stdout }}"
+    hostname_short:         "{{ host_short.stdout }}"
+    inventory_hostname:     "{{ host_short.stdout }}"
+    ansible_distribution:   MacOS
+    ansible_architecture:   x86_64
+    gather_facts:           no
+  when: ansible_host == 'localhost'

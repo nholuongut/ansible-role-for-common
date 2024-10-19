@@ -1,0 +1,23 @@
+{
+  "name": "ansible-common",
+  "version": "2.0.0",
+  "description": "Common tasks for all ansible projects",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isaackehle/ansible-common.git"
+  },
+  "author": "Isaac Kehle (isaac@kehle.org)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/isaackehle/ansible-common/issues"
+  },
+  "homepage": "https://github.com/isaackehle/ansible-common#readme",
+  "main": "tasks/main.yml",
+  "keywords": [
+    "ansible"
+  ]
+}
